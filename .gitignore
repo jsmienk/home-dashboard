@@ -1,0 +1,4 @@
+.venv/*
+screens/*
+geckodriver.log
+html/renders/*

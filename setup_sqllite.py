@@ -1,0 +1,47 @@
+"""
+Run once to setup the database for the home dashboard project.
+
+Films and Screenings tables for Vue movies
+"""
+
+import os
+import sqlite3
+
+
+conn = sqlite3.connect(os.environ.get("HOME_DASHBOARD_DB"))
+cursor = conn.cursor()
+
+# FILMS AND SCREENINGS
+cursor.execute("""
+  CREATE TABLE IF NOT EXISTS films (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    slug TEXT,
+    description TEXT,
+    genres TEXT,
+    cast TEXT,
+    image_url TEXT,
+    release_date DATE,
+    rating_average REAL,
+    rating_count INTEGER
+  )""")
+cursor.execute("""
+  CREATE TABLE IF NOT EXISTS screenings (
+    id INTEGER PRIMARY KEY,
+    film_id INTEGER,
+    has_3d INTEGER,
+    has_atmos INTEGER,
+    has_ov INTEGER,
+    has_nl INTEGER,
+    has_break INTEGER,
+    start DATETIME,
+    end DATETIME,
+    visible INTEGER,
+    disabled INTEGER,
+    occupied_seats INTEGER,
+    total_seats INTEGER,
+    FOREIGN KEY (film_id) REFERENCES films(id)
+  )""")
+
+conn.commit()
+conn.close()

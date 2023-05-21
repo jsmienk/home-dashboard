@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../dashboards.css">
+  <style>
+    body {
+      background-size: cover;
+      background-position: 0 20%;
+      color: #fff;
+    }
+
+    .background-filter {
+      width: 100vw;
+      height: 100vh;
+      padding: 28px 16px;
+      backdrop-filter: blur(10px);
+      background-color: #00000055;
+    }
+
+    table {
+      table-layout: fixed;
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td {
+      text-align: left;
+      padding: 12px;
+      font-weight: normal;
+    }
+
+    .title {
+      width: 240px;
+    }
+    .title {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .release {
+      width: 64px;
+    }
+    .release span {
+      font-size: 14px;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .weekdays {
+      width: 34px;
+      padding: 0;
+    }
+    .weekdays span {
+      display: inline-block;
+      width: 34px;
+      overflow: hidden;
+      background-color: #dd7a33;
+      color: #fff;
+      padding: 1px 3px 2px;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .genres {
+      width: 120px;
+    }
+    .genres {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: clip;
+    }
+
+    .more-info {
+      padding-top: 0;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body style="background-image: url({{ background }});">
+  <div class="background-filter">
+    <table>
+      {% for film in films[:9] %}
+      <tr>
+        <td class="title">{{ film.title }}</td>
+        <td class="release"><span>{{ film.release }}</span></td>
+        {% for day in film.weekdays() %}
+        <td class="weekdays">
+          {% if day %}
+          <span>{{ day }}</span>
+          {% endif %}
+        </td>
+        {% endfor %}
+        <td class="genres"><span>{{ film.genres }}</span></td>
+      </tr>
+      {% endfor %}
+      {% if films.__len__() > 9: %}
+      <tr>
+        <td class="more-info" colspan="10">en meer...</td>
+      </tr>
+      {% endif %}
+    </table>
+  </div>
+</body>
+</html>
