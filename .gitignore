@@ -1,4 +1,5 @@
 .venv/*
 screens/*
-geckodriver.log
 html/renders/*
+geckodriver.log
+home_dasboard.db

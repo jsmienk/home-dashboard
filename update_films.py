@@ -37,7 +37,7 @@ class Film:
     self.genres = data.get('genres')
     self.cast = data.get('cast')
     self.image_url = data.get('image')
-    self.release_date = datetime.strptime(data.get('release_date'), DATETIME_FORMAT).date
+    self.release_date = datetime.strptime(data.get('release_date'), DATETIME_FORMAT).date()
     self.rating_average = data.get('rating_average')
     self.rating_count = data.get('rating_count')
     self.screenings = [Screening(s) for s in data.get('performances', [])]

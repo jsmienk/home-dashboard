@@ -6,8 +6,6 @@ import re
 
 from datetime import datetime, date, timedelta
 
-DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
-
 class Screening:
   def __init__(self, db_row) -> None:
     self.id = db_row[0]
@@ -17,8 +15,8 @@ class Screening:
     self.has_ov = bool(db_row[4])  # original version
     self.has_nl = bool(db_row[5])  # dutch version (includes all Dutch movies...)
     self.has_break = bool(db_row[6])
-    self.start = datetime.strptime(db_row[7], DATETIME_FORMAT)
-    self.end = datetime.strptime(db_row[8], DATETIME_FORMAT)
+    self.start = datetime.strptime(db_row[7], "%Y-%m-%d %H:%M:%S")
+    self.end = datetime.strptime(db_row[8], "%Y-%m-%d %H:%M:%S")
     self.visible = bool(db_row[9])
     self.disabled = bool(db_row[10])
     self.occupied_seats = db_row[11]
@@ -33,7 +31,7 @@ class Film:
     self.genres = db_row[4]
     self.cast = db_row[5]
     self.image_url = db_row[6]
-    self.release_date = datetime.strptime(db_row[7], DATETIME_FORMAT).date()
+    self.release_date = datetime.strptime(db_row[7], "%Y-%m-%d").date()
     self.rating_average = db_row[8]
     self.rating_count = db_row[9]
     self.screenings = list()
@@ -59,7 +57,7 @@ with sqlite3.connect(os.environ.get("HOME_DASHBOARD_DB")) as conn:
       AND s.has_3d = 0 AND s.visible = 1 AND s.disabled = 0
       AND time(s.start) BETWEEN time('17:00') AND time('22:00')
       AND f.title NOT LIKE '%Nederlandse Versie%'
-    ORDER BY f.release_date DESC, s.start ASC
+    ORDER BY date(s.start) ASC, f.release_date DESC
   """).fetchall()
 
   # Parse into Film and Screening objects
@@ -99,7 +97,7 @@ class FilmDecorator:
   def weekdays(self):
     coming_weekdays = [(date.today() + timedelta(days=i)).weekday() for i in range(7)]
     screening_weekdays = {s.start.weekday() for s in self.film.screenings}
-    return [None if weekday in screening_weekdays else WEEKDAYS[weekday] for weekday in coming_weekdays]
+    return [WEEKDAYS[weekday] if weekday in screening_weekdays else None for weekday in coming_weekdays]
 
 
 film_decorators = [FilmDecorator(film) for film in films.values()]
