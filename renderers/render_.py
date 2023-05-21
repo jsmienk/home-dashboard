@@ -3,7 +3,7 @@ NAME = "<name>"
 #region Class definitions
 
 
-  
+
 #endregion Class definitions
 
 #region Retrieve data from SQLite

@@ -1,4 +1,5 @@
 .venv/*
+art/*
 screens/*
 html/renders/*
 geckodriver.log

@@ -43,22 +43,21 @@ class Film:
     self.screenings = [Screening(s) for s in data.get('performances', [])]
 
 
-# Create a SQLite database connection
-with sqlite3.connect(os.environ.get("HOME_DASHBOARD_DB")) as conn:
-  cursor = conn.cursor()
+# Query the API for today and the next 6 days
+today = date.today()
+for i in range(7):
+  query_date = today + timedelta(days=i)
+  query_params = {
+    "type": "NOW_PLAYING_WITH_PERFORMANCES",
+    "filters[cinema_id]": CINEMA_ID,
+    "dateOffset": str(query_date)
+  }
 
-  # Query the API for today and the next 6 days
-  today = date.today()
-  for i in range(7):
-    query_date = today + timedelta(days=i)
-    query_params = {
-      "type": "NOW_PLAYING_WITH_PERFORMANCES",
-      "filters[cinema_id]": CINEMA_ID,
-      "dateOffset": str(query_date)
-    }
-
-    response = requests.get(URL, params=query_params)
-    if response.status_code == 200:
+  response = requests.get(URL, params=query_params)
+  if response.status_code == 200:
+    # Create a SQLite database connection
+    with sqlite3.connect(os.environ.get("HOME_DASHBOARD_DB")) as conn:
+      cursor = conn.cursor()
       for film_data in response.json():
         f = Film(film_data)
         cursor.execute("INSERT OR IGNORE INTO films (id, title, slug, description, genres, cast, image_url, release_date, rating_average, rating_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -66,4 +65,4 @@ with sqlite3.connect(os.environ.get("HOME_DASHBOARD_DB")) as conn:
         for s in f.screenings:
           cursor.execute("INSERT OR REPLACE INTO screenings (id, film_id, has_3d, has_atmos, has_ov, has_nl, has_break, start, end, visible, disabled, occupied_seats, total_seats) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                         (s.id, f.id, s.has_3d, s.has_atmos, s.has_ov, s.has_nl, s.has_break, s.start, s.end, s.visible, s.disabled, s.occupied_seats, s.total_seats))
-  conn.commit()
+      conn.commit()
