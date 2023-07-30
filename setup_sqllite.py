@@ -12,6 +12,7 @@ with sqlite3.connect(os.environ.get("HOME_DASHBOARD_DB")) as conn:
   cursor = conn.cursor()
 
   # ARTWORKS
+  # cursor.execute("DROP TABLE artworks")
   cursor.execute("""
     CREATE TABLE IF NOT EXISTS artworks (
       id INTEGER PRIMARY KEY,
