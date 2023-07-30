@@ -5,3 +5,4 @@ selenium==4.9.1
 pillow==9.5.0
 pypng==0.20220715.0
 qrcode==7.4.2
+inky[rpi,example-depends]
