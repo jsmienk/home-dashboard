@@ -16,12 +16,12 @@ parsed_url = urlparse(os.path.join(os.getcwd(), RENDER))
 file_url = urlunparse(parsed_url._replace(scheme='file'))
 
 options = Options()
-options.binary_location = "/Applications/Chromium.app/Contents/MacOS/Chromium"
+# options.binary_location = "/Applications/Chromium.app/Contents/MacOS/Chromium"
 options.add_argument("--no-sandbox")
 options.add_argument("--headless")
 options.add_argument('--force-device-scale-factor=1')
 options.add_argument("window-size=800x480")
-driver = webdriver.Chrome("/opt/homebrew/bin/chromedriver", options=options)
+driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver", options=options)
 driver.get(file_url)
 
 time.sleep(5)  # wait for background image to load
