@@ -11,7 +11,18 @@ from datetime import datetime, date, timedelta
 
 URL = "https://www.vuecinemas.nl/movies.json"
 CINEMA_ID = 24
-DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+
+
+def parse_datetime(datetime_str):
+  if datetime_str == "0000-00-00 00:00:00":
+    return datetime.now().date()
+  elif len(datetime_str) == 19:
+    return datetime.strptime(datetime_str, "%Y-%m-%d %H:%M:%S").date()
+  elif len(datetime_str) == 10:
+    return datetime.strptime(datetime_str, "%Y-%m-%d").date()
+  else:
+    raise datetime.now().date()
+
 
 class Screening:
   def __init__(self, data):
@@ -21,8 +32,8 @@ class Screening:
     self.has_ov = bool(data.get('has_ov'))  # original version
     self.has_nl = bool(data.get('has_nl'))  # dutch version (includes all Dutch movies...)
     self.has_break = bool(data.get('has_break'))
-    self.start = datetime.strptime(data.get('start'), DATETIME_FORMAT)
-    self.end = datetime.strptime(data.get('end'), DATETIME_FORMAT)
+    self.start = parse_datetime(data.get('start'))
+    self.end = parse_datetime(data.get('end'))                       
     self.visible = bool(data.get('visible'))
     self.disabled = bool(data.get('disabled'))
     self.occupied_seats = data.get('occupied_seats')
@@ -37,7 +48,7 @@ class Film:
     self.genres = data.get('genres')
     self.cast = data.get('cast')
     self.image_url = data.get('image')
-    self.release_date = datetime.strptime(data.get('release_date'), DATETIME_FORMAT).date()
+    self.release_date = parse_datetime(data.get('release_date'))
     self.rating_average = data.get('rating_average')
     self.rating_count = data.get('rating_count')
     self.screenings = [Screening(s) for s in data.get('performances', [])]

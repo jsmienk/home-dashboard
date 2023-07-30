@@ -3,5 +3,5 @@ art/*
 screens/*
 html/renders/*
 geckodriver.log
-home_dasboard.db
+home_dashboard.db
 .DS_Store
