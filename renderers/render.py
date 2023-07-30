@@ -7,7 +7,7 @@ from selenium.webdriver.chrome.options import Options
 from urllib.parse import urlparse, urlunparse
 
 if len(sys.argv) != 2:
-  raise ValueError("Name was not provided.")
+  raise ValueError("Name was not provided!")
 
 NAME = sys.argv[1]
 RENDER = f"./html/renders/{NAME}.html"
