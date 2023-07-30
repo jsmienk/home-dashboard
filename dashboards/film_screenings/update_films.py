@@ -15,13 +15,13 @@ CINEMA_ID = 24
 
 def parse_datetime(datetime_str):
   if datetime_str == "0000-00-00 00:00:00":
-    return datetime.now().date()
+    return datetime.now()
   elif len(datetime_str) == 19:
-    return datetime.strptime(datetime_str, "%Y-%m-%d %H:%M:%S").date()
+    return datetime.strptime(datetime_str, "%Y-%m-%d %H:%M:%S")
   elif len(datetime_str) == 10:
     return datetime.strptime(datetime_str, "%Y-%m-%d").date()
   else:
-    raise datetime.now().date()
+    raise datetime.now()
 
 
 class Screening:

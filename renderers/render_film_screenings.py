@@ -15,8 +15,8 @@ class Screening:
     self.has_ov = bool(db_row[4])  # original version
     self.has_nl = bool(db_row[5])  # dutch version (includes all Dutch movies...)
     self.has_break = bool(db_row[6])
-    self.start = datetime.strptime(db_row[7], "%Y-%m-%d %H:%M:%S")
-    self.end = datetime.strptime(db_row[8], "%Y-%m-%d %H:%M:%S")
+    self.start = datetime.strptime(db_row[7][:19], "%Y-%m-%d %H:%M:%S")
+    self.end = datetime.strptime(db_row[8][:19], "%Y-%m-%d %H:%M:%S")
     self.visible = bool(db_row[9])
     self.disabled = bool(db_row[10])
     self.occupied_seats = db_row[11]
@@ -31,7 +31,7 @@ class Film:
     self.genres = db_row[4]
     self.cast = db_row[5]
     self.image_url = db_row[6]
-    self.release_date = datetime.strptime(db_row[7], "%Y-%m-%d").date()
+    self.release_date = datetime.strptime(db_row[7][:10], "%Y-%m-%d").date()
     self.rating_average = db_row[8]
     self.rating_count = db_row[9]
     self.screenings = list()
@@ -66,6 +66,9 @@ with sqlite3.connect(os.environ.get("HOME_DASHBOARD_DB")) as conn:
     if film_id not in films:
       films[film_id] = Film(data[:10])
     films[film_id].add_screening(Screening(data[10:]))
+  
+  if len(films) == 0:
+    raise ValueError("No films found to render!")
 
 #endregion Retrieve data from SQLite
 
