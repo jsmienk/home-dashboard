@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../dashboards.css">
+  <style>
+    body {
+      background-position: center;
+      background-size: cover;
+    }
+
+    .attribution {
+      text-align: right;
+      position: fixed;
+      right: 22px;
+      bottom: 26px;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .attribution .bkg {
+      display: inline-block;
+      padding: 2px 5px;
+      background-color: #000;
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .artist-date {
+      margin-top: 4px;
+    }
+
+    .qr {
+      position: fixed;
+      left: 20px;
+      bottom: 20px;
+      background-color: #000;
+    }
+
+    .qr img {
+      display: block;
+      width: 74px;
+      height: 74px;
+    }
+  </style>
+</head>
+<body style="background-image: url({{ artwork.image_path }});">
+  <div class="attribution">
+    <div class="title">
+      <span class="bkg">{{ artwork.title }}</span>
+    </div>
+    <div class="artist-date">
+      <span class="bkg">{{ artwork.artist }}, <span class="date">{{ artwork.date_display }}</span></span>
+    </div>
+  </div>
+
+  <span class="qr">
+    <img src="tmp/qr.png"></img>
+  </span>
+</body>
+</html>
