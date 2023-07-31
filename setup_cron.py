@@ -15,6 +15,8 @@ def renderers(name):
 
 
 with CronTab(user='pi') as cron:
+  cron.remove_all()
+
   # Art dashboard
   job = cron.new(
     command=renderers('art'),
