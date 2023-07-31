@@ -6,12 +6,12 @@ DASHBOARDS = ['art', 'film_screenings']
 def dashboards(name, command):
   if name not in DASHBOARDS:
     raise ValueError('Invalid dashboard name!')
-  return f"~/home_dashboard/dashboards/{name}/{command}.py >> /home_dashboard/dashboards/{name}/{command}.log 2>&1"
+  return f"python3 ~/home_dashboard/dashboards/{name}/{command}.py >> /home_dashboard/dashboards/{name}/{command}.log 2>&1"
 
 def renderers(name):
   if name not in DASHBOARDS:
     raise ValueError('Invalid dashboard name!')
-  return f"~/home_dashboard/renderers/render_{name}.py >> /home_dashboard/dashboards/{name}/render.log 2>&1"
+  return f"python3 ~/home_dashboard/renderers/render_{name}.py >> /home_dashboard/dashboards/{name}/render.log 2>&1"
 
 
 with CronTab(user='pi') as cron:
