@@ -11,7 +11,8 @@ if len(sys.argv) != 2:
   raise ValueError('Name was not provided!')
 
 NAME = sys.argv[1]
-RENDER = f'~/home-dashboard/html/renders/{NAME}.html'
+PWD = '/home/pi/home-dashboard'
+RENDER = f'{PWD}/html/renders/{NAME}.html'
 
 
 parsed_url = urlparse(os.path.join(os.getcwd(), RENDER))
@@ -28,11 +29,11 @@ driver.get(file_url)
 
 time.sleep(3)  # wait for background image to load
 
-driver.save_screenshot(f'~/home-dashboard/screens/{NAME}.png')
+driver.save_screenshot(f'{PWD}/screens/{NAME}.png')
 driver.quit()
 
 
 import subprocess
 # refresh screen if it is the active dashboard
 if os.getenv('ACTIVE_DASHBOARD', 'art') == NAME:
-  subprocess.check_call(['python3', '~/home-dashboard/dashboards/set_screen.py', NAME])
+  subprocess.check_call(['python3', f'{PWD}/dashboards/set_screen.py', NAME])

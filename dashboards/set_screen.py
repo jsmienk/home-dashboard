@@ -7,7 +7,9 @@ from PIL import Image
 if len(sys.argv) != 2:
   raise ValueError("Name was not provided!")
 
-image = Image.open("~/home-dashboard/screens/{}.png".format(sys.argv[1]))
+PWD = '/home/pi/home-dashboard'
+
+image = Image.open(f'{PWD}/screens/{sys.argv[1]}.png')
 display = auto()
 display.set_image(image)
 display.show()

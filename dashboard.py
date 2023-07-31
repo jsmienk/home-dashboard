@@ -22,7 +22,7 @@ def load_dashboard(dashboard):
   try:
     if os.getenv('ACTIVE_DASHBOARD') != dashboard:
       os.putenv('ACTIVE_DASHBOARD', dashboard)
-      subprocess.check_call(['python3', './dashboards/set_screen.py', dashboard])
+      subprocess.check_call(['python3', 'home/pi/home-dashboard/dashboards/set_screen.py', dashboard])
   except subprocess.CalledProcessError:
     print('Dashboard \'{}\' failed to run!'.format(dashboard.upper()))
 
