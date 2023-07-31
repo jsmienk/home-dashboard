@@ -1,4 +1,4 @@
-NAME = "film_screenings"
+NAME = 'film_screenings'
 films = dict()
 
 #region Class definitions
@@ -15,8 +15,8 @@ class Screening:
     self.has_ov = bool(db_row[4])  # original version
     self.has_nl = bool(db_row[5])  # dutch version (includes all Dutch movies...)
     self.has_break = bool(db_row[6])
-    self.start = datetime.strptime(db_row[7][:19], "%Y-%m-%d %H:%M:%S")
-    self.end = datetime.strptime(db_row[8][:19], "%Y-%m-%d %H:%M:%S")
+    self.start = datetime.strptime(db_row[7][:19], '%Y-%m-%d %H:%M:%S')
+    self.end = datetime.strptime(db_row[8][:19], '%Y-%m-%d %H:%M:%S')
     self.visible = bool(db_row[9])
     self.disabled = bool(db_row[10])
     self.occupied_seats = db_row[11]
@@ -31,7 +31,7 @@ class Film:
     self.genres = db_row[4]
     self.cast = db_row[5]
     self.image_url = db_row[6]
-    self.release_date = datetime.strptime(db_row[7][:10], "%Y-%m-%d").date()
+    self.release_date = datetime.strptime(db_row[7][:10], '%Y-%m-%d').date()
     self.rating_average = db_row[8]
     self.rating_count = db_row[9]
     self.screenings = list()
@@ -45,7 +45,7 @@ class Film:
 import os
 import sqlite3
 
-with sqlite3.connect(os.environ.get("HOME_DASHBOARD_DB")) as conn:
+with sqlite3.connect(os.getenv('HOME_DASHBOARD_DB', './home_dashboard.db')) as conn:
   cursor = conn.cursor()
   # Get available 2D screenings that start between 17:00 and 22:00 in the coming days
   result = cursor.execute("""
@@ -68,7 +68,7 @@ with sqlite3.connect(os.environ.get("HOME_DASHBOARD_DB")) as conn:
     films[film_id].add_screening(Screening(data[10:]))
   
   if len(films) == 0:
-    raise ValueError("No films found to render!")
+    raise ValueError('No films found to render!')
 
 #endregion Retrieve data from SQLite
 
@@ -77,8 +77,8 @@ import random
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-TEMPLATES_PATH = "./html/templates"
-RENDER = f"./html/renders/{NAME}.html"
+TEMPLATES_PATH = './html/templates'
+RENDER = f'./html/renders/{NAME}.html'
 WEEKDAYS = ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo']
 
 class FilmDecorator:
@@ -87,11 +87,11 @@ class FilmDecorator:
 
   @property
   def title(self):
-    return re.sub(" \(originele versie\)", '', self.film.title.strip(), flags=re.IGNORECASE)
+    return re.sub(' \(originele versie\)', '', self.film.title.strip(), flags=re.IGNORECASE)
 
   @property
   def release(self):
-    return self.film.release_date.strftime("%d/%m")
+    return self.film.release_date.strftime('%d/%m')
 
   @property
   def genres(self):
@@ -108,7 +108,7 @@ film_decorators = [FilmDecorator(film) for film in films.values()]
 template = Environment(
   loader=FileSystemLoader(TEMPLATES_PATH),
   autoescape=select_autoescape()
-).get_template(f"{NAME}.html")
+).get_template(f'{NAME}.html')
 
 with open(RENDER, 'w') as file:
   html = template.render(
@@ -124,8 +124,8 @@ with open(RENDER, 'w') as file:
 import subprocess
 
 try:
-    subprocess.check_call(["python3", "./renderers/render.py", NAME])
+    subprocess.check_call(['python3', './renderers/render.py', NAME])
 except subprocess.CalledProcessError:
-    print("HTML was generated, but failed to save the image...")
+    print('HTML was generated, but failed to save the image...')
 
 #endregion Save as image

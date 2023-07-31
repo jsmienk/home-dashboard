@@ -1,8 +1,9 @@
+import os
 import RPi.GPIO as GPIO
 import signal
 import subprocess
 
-print("Dashboards running. Quit using Ctrl+C!")
+print('Dashboards running. Quit using Ctrl+C!')
 
 BUTTONS = [ 5,   6,   16,  24]
 LABELS  = ['A', 'B', 'C', 'D']
@@ -17,11 +18,13 @@ DASHBOARDS = [
 def load_dashboard(dashboard):
   if dashboard == 'n/a': return
 
-  print("Loading dashboard '{}' ...".format(dashboard.upper()))
+  print('Loading dashboard \'{}\' ...'.format(dashboard.upper()))
   try:
-    subprocess.check_call(['python3', "./dashboard/{}.py".format(dashboard)])
+    if os.getenv('ACTIVE_DASHBOARD') != dashboard:
+      os.putenv('ACTIVE_DASHBOARD', dashboard)
+      subprocess.check_call(['python3', './dashboards/set_screen.py', dashboard])
   except subprocess.CalledProcessError:
-    print("Dashboard '{}' failed to run!".format(dashboard.upper()))
+    print('Dashboard \'{}\' failed to run!'.format(dashboard.upper()))
 
 
 def handle_button(pin):

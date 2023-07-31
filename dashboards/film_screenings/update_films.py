@@ -67,7 +67,7 @@ for i in range(7):
   response = requests.get(URL, params=query_params)
   if response.status_code == 200:
     # Create a SQLite database connection
-    with sqlite3.connect(os.environ.get("HOME_DASHBOARD_DB")) as conn:
+    with sqlite3.connect(os.getenv('HOME_DASHBOARD_DB', './home_dashboard.db')) as conn:
       cursor = conn.cursor()
       for film_data in response.json():
         f = Film(film_data)
