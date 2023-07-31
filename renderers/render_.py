@@ -24,8 +24,8 @@ with sqlite3.connect(os.environ.get("HOME_DASHBOARD_DB")) as conn:
 #region Generate HTML
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-TEMPLATES_PATH = "./html/templates"
-RENDER = f"./html/renders/{NAME}.html"
+TEMPLATES_PATH = "~/home-dashboard/html/templates"
+RENDER = f"~/home-dashboard/html/renders/{NAME}.html"
 
 template = Environment(
   loader=FileSystemLoader(TEMPLATES_PATH),
@@ -43,7 +43,7 @@ with open(RENDER, 'w') as file:
 import subprocess
 
 try:
-    subprocess.check_call(["python3", "./renderers/render.py", NAME])
+    subprocess.check_call(["python3", "~/home-dashboard/renderers/render.py", NAME])
 except subprocess.CalledProcessError:
     print("HTML was generated, but failed to save the image...")
 
