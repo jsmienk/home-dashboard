@@ -14,7 +14,7 @@ CINEMA_ID = 24
 
 
 def parse_datetime(datetime_str):
-  if datetime_str == "0000-00-00 00:00:00":
+  if datetime_str == None or datetime_str == "0000-00-00 00:00:00":
     return datetime.now()
   elif len(datetime_str) == 19:
     return datetime.strptime(datetime_str, "%Y-%m-%d %H:%M:%S")
