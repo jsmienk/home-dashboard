@@ -45,7 +45,7 @@ class Film:
 import os
 import sqlite3
 
-with sqlite3.connect(os.getenv('HOME_DASHBOARD_DB', './home_dashboard.db')) as conn:
+with sqlite3.connect(os.getenv('HOME_DASHBOARD_DB', '~/home-dashboard/home_dashboard.db')) as conn:
   cursor = conn.cursor()
   # Get available 2D screenings that start between 17:00 and 22:00 in the coming days
   result = cursor.execute("""
