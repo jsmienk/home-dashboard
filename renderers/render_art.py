@@ -18,7 +18,7 @@ import random
 import sqlite3
 
 artwork = None
-with sqlite3.connect(os.environ.get('HOME_DASHBOARD_DB')) as conn:
+with sqlite3.connect(os.getenv('HOME_DASHBOARD_DB', './home_dashboard.db')) as conn:
   cursor = conn.cursor()
   result = cursor.execute("""
     SELECT id, image_path, title, date_display, artist
