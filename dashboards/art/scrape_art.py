@@ -10,7 +10,7 @@ import time
 
 URL = "https://api.artic.edu/api/v1/artworks"
 IMAGE_FOLDER_NAME = "art"
-ART_TYPES = ["Photograph", "Drawing and Watercolor", "Painting"]
+ART_TYPES = ["Painting"]
 
 
 class Artwork:
@@ -48,7 +48,7 @@ class Artwork:
 params = {
   "fields": "id,image_id,title,date_display,artist_title,dimensions_detail,artwork_type_title",
   "limit": 30,
-  "page": 1
+  "page": 100
 }
 
 count = 0
