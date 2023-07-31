@@ -9,7 +9,7 @@ BUTTONS = [ 5,   6,   16,  24]
 LABELS  = ['A', 'B', 'C', 'D']
 DASHBOARDS = [
   'art',
-  'films_screenings',
+  'film_screenings',
   'n/a',
   'n/a'
 ]
