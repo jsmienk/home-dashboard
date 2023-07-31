@@ -16,11 +16,20 @@ def renderers(name):
 
 with CronTab(user='pi') as cron:
   # Art dashboard
-  job = cron.new(command=renderers('art'), comment='Render art dashboard')
-  job.minute.every(2)
+  job = cron.new(
+    command=renderers('art'),
+    comment='Render art dashboard'
+  )
+  job.setall('*/2 * * * *')
 
   # Film screenings dashboard
-  job = cron.new(command=dashboards('film_screenings', 'update_films'), comment='Update film screenings database')
-  job.hour.every(2)
-  job = cron.new(command=renderers('film_screenings'), comment='Render film screenings dashboard')
-  job.hour.every(2).minute.on(5)
+  job = cron.new(
+    command=dashboards('film_screenings', 'update_films'),
+    comment='Update film screenings database'
+  )
+  job.setall('0 */4 * * *')
+  job = cron.new(
+    command=renderers('film_screenings'),
+    comment='Render film screenings dashboard'
+  )
+  job.setall('5 */4 * * *')
