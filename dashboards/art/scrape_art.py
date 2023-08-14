@@ -48,7 +48,7 @@ class Artwork:
 params = {
   "fields": "id,image_id,title,date_display,artist_title,dimensions_detail,artwork_type_title",
   "limit": 30,
-  "page": 100
+  "page": 591
 }
 
 count = 0
@@ -59,7 +59,7 @@ while count < 100:
   response = requests.get(URL, params=params)
   if response.status_code == 200:
     # Create a SQLite database connection
-    with sqlite3.connect(os.getenv('HOME_DASHBOARD_DB', '~/home-dashboard/home_dashboard.db')) as conn:
+    with sqlite3.connect(os.getenv('HOME_DASHBOARD_DB', 'home/pi/home-dashboard/home_dashboard.db')) as conn:
       cursor = conn.cursor()
       for artwork_data in response.json()["data"]:
         a = Artwork(artwork_data)
