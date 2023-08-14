@@ -7,11 +7,14 @@
     body {
       background-color: #fff;
       color: #000;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
     }
 
     table {
       table-layout: fixed;
-      width: 100%;
+      width: 500px;
       border-collapse: collapse;
     }
 
@@ -39,12 +42,12 @@
     }
 
     .weekdays {
-      width: 34px;
+      width: 40px;
       padding: 0;
     }
     .weekdays span {
       display: inline-block;
-      width: 34px;
+      width: 36px;
       overflow: hidden;
       background-color: #dd7a33cc;
       color: #fff;
@@ -57,6 +60,11 @@
       padding-top: 0;
       font-size: 12px;
     }
+
+    img {
+      width: 300px;
+      object-fit: contain;
+    }
   </style>
 </head>
 <body>
@@ -64,7 +72,6 @@
     {% for film in films[:9] %}
     <tr>
       <td class="title">{{ film.title }}</td>
-      <td class="release"><span>{{ film.release }}</span></td>
       {% for day in film.weekdays() %}
       <td class="weekdays">
         {% if day %}
@@ -80,5 +87,6 @@
     </tr>
     {% endif %}
   </table>
+  <img src="{{ poster }}" />
 </body>
 </html>

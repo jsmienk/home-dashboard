@@ -115,7 +115,7 @@ template = Environment(
 with open(RENDER, 'w') as file:
   html = template.render(
     films=film_decorators,
-    background=random.choice(list(films.values())).image_url
+    poster=random.choice(list(films.values())).image_url
   )
   file.write(html)
 

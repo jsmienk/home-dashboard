@@ -24,6 +24,7 @@ options.add_argument('--no-sandbox')
 options.add_argument('--headless')
 options.add_argument('--force-device-scale-factor=1')
 options.add_argument('window-size=800x480')
+# driver = webdriver.Chrome("/opt/homebrew/bin/chromedriver", options=options)
 driver = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver', options=options)
 driver.get(file_url)
 
@@ -36,4 +37,4 @@ driver.quit()
 import subprocess
 # refresh screen if it is the active dashboard
 # if os.getenv('ACTIVE_DASHBOARD', 'art') == NAME:
-subprocess.check_call(['python3', f'{PWD}/dashboards/set_screen.py', NAME])
+# subprocess.check_call(['python3', f'{PWD}/dashboards/set_screen.py', NAME])
