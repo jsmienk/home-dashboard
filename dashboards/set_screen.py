@@ -5,7 +5,7 @@ from PIL import Image
 
 
 if len(sys.argv) != 2:
-  raise ValueError("Name was not provided!")
+  raise ValueError('Name was not provided!')
 
 PWD = '/home/pi/home-dashboard'
 

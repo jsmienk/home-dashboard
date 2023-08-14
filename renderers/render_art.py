@@ -20,7 +20,7 @@ import sqlite3
 
 artwork = None
 
-with sqlite3.connect(os.getenv('HOME_DASHBOARD_DB', f'{PWD}/home_dashboard.db')) as conn:
+with sqlite3.connect(os.getenv('HOME_DASHBOARD_DB')) as conn:
   cursor = conn.cursor()
   result = cursor.execute("""
     SELECT id, image_path, title, date_display, artist

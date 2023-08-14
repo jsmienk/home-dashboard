@@ -1,4 +1,5 @@
-NAME = "<name>"
+NAME = '<name>'
+PWD = '/home/pi/home-dashboard'
 
 #region Class definitions
 
@@ -10,7 +11,7 @@ NAME = "<name>"
 import os
 import sqlite3
 
-with sqlite3.connect(os.environ.get("HOME_DASHBOARD_DB")) as conn:
+with sqlite3.connect(os.environ.get('HOME_DASHBOARD_DB')) as conn:
   cursor = conn.cursor()
   result = cursor.execute("""
     ...
@@ -24,13 +25,13 @@ with sqlite3.connect(os.environ.get("HOME_DASHBOARD_DB")) as conn:
 #region Generate HTML
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-TEMPLATES_PATH = "~/home-dashboard/html/templates"
-RENDER = f"~/home-dashboard/html/renders/{NAME}.html"
+TEMPLATES_PATH = f'{PWD}/html/templates'
+RENDER = f'{PWD}/html/renders/{NAME}.html'
 
 template = Environment(
   loader=FileSystemLoader(TEMPLATES_PATH),
   autoescape=select_autoescape()
-).get_template(f"{NAME}.html")
+).get_template(f'{NAME}.html')
 
 with open(RENDER, 'w') as file:
   html = template.render()
@@ -43,8 +44,8 @@ with open(RENDER, 'w') as file:
 import subprocess
 
 try:
-    subprocess.check_call(["python3", "~/home-dashboard/renderers/render.py", NAME])
+    subprocess.check_call(['python3', f'{PWD}/renderers/render.py', NAME])
 except subprocess.CalledProcessError:
-    print("HTML was generated, but failed to save the image...")
+    print('HTML was generated, but failed to save the image...')
 
 #endregion Save as image

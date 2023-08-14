@@ -1,4 +1,6 @@
 NAME = 'film_screenings'
+PWD = '/home/pi/home-dashboard'
+
 films = dict()
 
 #region Class definitions
@@ -45,7 +47,7 @@ class Film:
 import os
 import sqlite3
 
-with sqlite3.connect(os.getenv('HOME_DASHBOARD_DB', '~/home-dashboard/home_dashboard.db')) as conn:
+with sqlite3.connect(os.getenv('HOME_DASHBOARD_DB')) as conn:
   cursor = conn.cursor()
   # Get available 2D screenings that start between 17:00 and 22:00 in the coming days
   result = cursor.execute("""
@@ -77,8 +79,8 @@ import random
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-TEMPLATES_PATH = './html/templates'
-RENDER = f'./html/renders/{NAME}.html'
+TEMPLATES_PATH = f'{PWD}/html/templates'
+RENDER = f'{PWD}/html/renders/{NAME}.html'
 WEEKDAYS = ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo']
 
 class FilmDecorator:
@@ -124,7 +126,7 @@ with open(RENDER, 'w') as file:
 import subprocess
 
 try:
-    subprocess.check_call(['python3', './renderers/render.py', NAME])
+    subprocess.check_call(['python3', f'{PWD}/renderers/render.py', NAME])
 except subprocess.CalledProcessError:
     print('HTML was generated, but failed to save the image...')
 
