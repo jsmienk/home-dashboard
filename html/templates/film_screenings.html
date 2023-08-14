@@ -5,7 +5,8 @@
   <link rel="stylesheet" href="../dashboards.css">
   <style>
     body {
-      color: #fff;
+      background-color: #fff;
+      color: #000;
     }
 
     table {
@@ -45,20 +46,11 @@
       display: inline-block;
       width: 34px;
       overflow: hidden;
-      background-color: #000;
+      background-color: #dd7a33cc;
       color: #fff;
       padding: 1px 3px 2px;
       border-radius: 3px;
       text-align: center;
-    }
-
-    .genres {
-      width: 120px;
-    }
-    .genres {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: clip;
     }
 
     .more-info {
@@ -67,7 +59,7 @@
     }
   </style>
 </head>
-<body style="background-color: #dd7a33cc;">
+<body>
   <table>
     {% for film in films[:9] %}
     <tr>
@@ -80,7 +72,6 @@
         {% endif %}
       </td>
       {% endfor %}
-      <td class="genres"><span>{{ film.genres }}</span></td>
     </tr>
     {% endfor %}
     {% if films.__len__() > 9: %}
