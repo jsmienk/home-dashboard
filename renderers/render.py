@@ -36,5 +36,5 @@ driver.quit()
 
 import subprocess
 # refresh screen if it is the active dashboard
-# if os.getenv('ACTIVE_DASHBOARD', 'art') == NAME:
-# subprocess.check_call(['python3', f'{PWD}/dashboards/set_screen.py', NAME])
+if os.getenv('ACTIVE_DASHBOARD', 'art') == NAME:
+  subprocess.check_call(['python3', f'{PWD}/dashboards/set_screen.py', NAME])
