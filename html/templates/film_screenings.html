@@ -5,17 +5,7 @@
   <link rel="stylesheet" href="../dashboards.css">
   <style>
     body {
-      background-size: 110%;
-      background-position: 50% 20%;
       color: #fff;
-    }
-
-    .background-filter {
-      width: 100vw;
-      height: 100vh;
-      padding: 28px 16px;
-      backdrop-filter: blur(3px);
-      background-color: #000000aa;
     }
 
     table {
@@ -55,7 +45,7 @@
       display: inline-block;
       width: 34px;
       overflow: hidden;
-      background-color: #dd7a33cc;
+      background-color: #000;
       color: #fff;
       padding: 1px 3px 2px;
       border-radius: 3px;
@@ -77,29 +67,27 @@
     }
   </style>
 </head>
-<body style="background-image: url({{ background }});">
-  <div class="background-filter">
-    <table>
-      {% for film in films[:9] %}
-      <tr>
-        <td class="title">{{ film.title }}</td>
-        <td class="release"><span>{{ film.release }}</span></td>
-        {% for day in film.weekdays() %}
-        <td class="weekdays">
-          {% if day %}
-          <span>{{ day }}</span>
-          {% endif %}
-        </td>
-        {% endfor %}
-        <td class="genres"><span>{{ film.genres }}</span></td>
-      </tr>
+<body style="background-color: #dd7a33cc;">
+  <table>
+    {% for film in films[:9] %}
+    <tr>
+      <td class="title">{{ film.title }}</td>
+      <td class="release"><span>{{ film.release }}</span></td>
+      {% for day in film.weekdays() %}
+      <td class="weekdays">
+        {% if day %}
+        <span>{{ day }}</span>
+        {% endif %}
+      </td>
       {% endfor %}
-      {% if films.__len__() > 9: %}
-      <tr>
-        <td class="more-info" colspan="10">en meer...</td>
-      </tr>
-      {% endif %}
-    </table>
-  </div>
+      <td class="genres"><span>{{ film.genres }}</span></td>
+    </tr>
+    {% endfor %}
+    {% if films.__len__() > 9: %}
+    <tr>
+      <td class="more-info" colspan="10">en meer...</td>
+    </tr>
+    {% endif %}
+  </table>
 </body>
 </html>
