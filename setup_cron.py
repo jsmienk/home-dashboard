@@ -28,7 +28,7 @@ with CronTab(user='pi') as cron:
     command=renderers('art'),
     comment='Render art dashboard'
   )
-  job.setall('*/2 * * * *')
+  job.setall('*/5 * * * *')
 
   # Film screenings dashboard
   job = cron.new(

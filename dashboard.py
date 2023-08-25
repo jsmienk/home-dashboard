@@ -1,11 +1,11 @@
 import configparser
+import os
 
 CONFIG_PATH = f'{os.getcwd()}/config.ini'
 config = configparser.ConfigParser()
 config.read(CONFIG_PATH)
 
 
-import os
 import RPi.GPIO as GPIO
 import signal
 import subprocess
