@@ -1,7 +1,8 @@
 import configparser
+import os
 
 config = configparser.ConfigParser()
-config.read('~/home-dashboard/config.ini')
+config.read(f'{os.getcwd()}/config.ini')
 SRC = config['PATHS']['src']
 
 NAME = '<name>'
@@ -13,7 +14,6 @@ NAME = '<name>'
 #endregion Class definitions
 
 #region Retrieve data from SQLite
-import os
 import sqlite3
 
 with sqlite3.connect(config['PATHS']['db']) as conn:

@@ -8,7 +8,7 @@ import sqlite3
 import time
 
 config = configparser.ConfigParser()
-config.read('~/home-dashboard/config.ini')
+config.read(f'{os.getcwd()}/config.ini')
 URL = config['ART']['url']
 
 ART_TYPES = ['Painting']

@@ -1,6 +1,6 @@
 import configparser
 
-CONFIG_PATH = '~/home-dashboard/config.ini'
+CONFIG_PATH = f'{os.getcwd()}/config.ini'
 config = configparser.ConfigParser()
 config.read(CONFIG_PATH)
 

@@ -1,11 +1,11 @@
 import configparser
+import os
 
 config = configparser.ConfigParser()
-config.read('~/home-dashboard/config.ini')
+config.read(f'{os.getcwd()}/config.ini')
 SRC = config['PATHS']['src']
 
 
-import os
 import sys
 import time 
 

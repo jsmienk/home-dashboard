@@ -2,6 +2,7 @@
 Run a couple times a day using a cronjob to update the data in the database.
 """
 import configparser
+import os
 import requests
 import sqlite3
 
@@ -9,7 +10,7 @@ from datetime import datetime, date, timedelta
 
 
 config = configparser.ConfigParser()
-config.read('~/home-dashboard/config.ini')
+config.read(f'{os.getcwd()}/config.ini')
 URL       = config['FILM_SCREENINGS']['url']
 CINEMA_ID = config['FILM_SCREENINGS']['cinema_id']
 
