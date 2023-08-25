@@ -14,7 +14,7 @@ print('Dashboards running. Quit using Ctrl+C!')
 
 BUTTONS = [ 5,   6,   16,  24]
 LABELS  = ['A', 'B', 'C', 'D']
-NAMES = config['DASHBOARDS']['names']
+NAMES = config['DASHBOARDS']['names'].split()
 
 
 def load_dashboard(button_pin):

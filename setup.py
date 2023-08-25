@@ -23,12 +23,6 @@ for folder in folders:
 
 
 SRC = os.getcwd()
-DASHBOARDS = [
-  'art',
-  'film_screenings',
-  'n/a',
-  'n/a'
-]
 
 with open(f'{SRC}/config.ini', 'w') as f:
   config = configparser.ConfigParser()
@@ -39,8 +33,8 @@ with open(f'{SRC}/config.ini', 'w') as f:
     'chromium': '/usr/lib/chromium-browser/chromedriver'
   }
   config['DASHBOARDS'] = {
-    'names': DASHBOARDS,
-    'active': DASHBOARDS[0]
+    'names': 'art film_screenings n/a n/a',
+    'active': 'art'
   }
   config['ART'] = {
     'url': 'https://api.artic.edu/api/v1/artworks'
