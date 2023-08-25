@@ -10,7 +10,7 @@ from datetime import datetime, date, timedelta
 
 
 config = configparser.ConfigParser()
-config.read(f'{os.getcwd()}/config.ini')
+config.read(f'{os.getcwd()}/home-dashboard/config.ini')
 URL       = config['FILM_SCREENINGS']['url']
 CINEMA_ID = config['FILM_SCREENINGS']['cinema_id']
 

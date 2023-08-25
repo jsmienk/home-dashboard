@@ -2,7 +2,7 @@ import configparser
 import os
 
 config = configparser.ConfigParser()
-config.read(f'{os.getcwd()}/config.ini')
+config.read(f'{os.getcwd()}/home-dashboard/config.ini')
 SRC = config['PATHS']['src']
 
 NAME = 'film_screenings'
