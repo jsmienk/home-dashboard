@@ -1,7 +1,10 @@
-NAME = 'film_screenings'
-PWD = '/home/pi/home-dashboard'
+import configparser
 
-films = dict()
+config = configparser.ConfigParser()
+config.read('~/home-dashboard/config.ini')
+SRC = config['PATHS']['src']
+
+NAME = 'film_screenings'
 
 #region Class definitions
 import re
@@ -44,10 +47,11 @@ class Film:
 #endregion Class definitions
 
 #region Retrieve data from SQLite
-import os
 import sqlite3
 
-with sqlite3.connect(os.getenv('HOME_DASHBOARD_DB')) as conn:
+films = dict()
+
+with sqlite3.connect(config['PATHS']['db']) as conn:
   cursor = conn.cursor()
   # Get available 2D screenings that start between 17:00 and 22:00 in the coming days
   result = cursor.execute("""
@@ -79,8 +83,8 @@ import random
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-TEMPLATES_PATH = f'{PWD}/html/templates'
-RENDER = f'{PWD}/html/renders/{NAME}.html'
+TEMPLATES_PATH = f'{SRC}/html/templates'
+RENDER = f'{SRC}/html/renders/{NAME}.html'
 WEEKDAYS = ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo']
 
 class FilmDecorator:
@@ -126,7 +130,7 @@ with open(RENDER, 'w') as file:
 import subprocess
 
 try:
-    subprocess.check_call(['python3', f'{PWD}/renderers/render.py', NAME])
+    subprocess.check_call(['python3', f'{SRC}/renderers/render.py', NAME])
 except subprocess.CalledProcessError:
     print('HTML was generated, but failed to save the image...')
 

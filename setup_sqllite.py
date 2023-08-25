@@ -4,11 +4,15 @@ Run once to setup the database for the home dashboard project.
 Films and Screenings tables for Vue movies
 """
 
-import os
+import configparser
+
+config = configparser.ConfigParser()
+config.read('~/home-dashboard/config.ini')
+
+
 import sqlite3
 
-
-with sqlite3.connect(os.getenv('HOME_DASHBOARD_DB')) as conn:
+with sqlite3.connect(config['PATHS']['db']) as conn:
   cursor = conn.cursor()
 
   # ARTWORKS

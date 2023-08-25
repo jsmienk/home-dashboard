@@ -1,3 +1,10 @@
+import configparser
+
+CONFIG_PATH = '~/home-dashboard/config.ini'
+config = configparser.ConfigParser()
+config.read(CONFIG_PATH)
+
+
 import os
 import RPi.GPIO as GPIO
 import signal
@@ -7,36 +14,34 @@ print('Dashboards running. Quit using Ctrl+C!')
 
 BUTTONS = [ 5,   6,   16,  24]
 LABELS  = ['A', 'B', 'C', 'D']
-DASHBOARDS = [
-  'art',
-  'film_screenings',
-  'n/a',
-  'n/a'
-]
+NAMES = config['DASHBOARDS']['names']
 
 
-def load_dashboard(dashboard):
-  if dashboard == 'n/a': return
+def load_dashboard(button_pin):
+  name = NAMES[BUTTONS.index(button_pin)]
+  if name == 'n/a': return
 
-  print('Loading dashboard \'{}\' ...'.format(dashboard.upper()))
+  config.read(CONFIG_PATH)
+
+  print(f"Loading dashboard '{name.upper()}' ...")
   try:
-    if os.getenv('ACTIVE_DASHBOARD') != dashboard:
-      os.putenv('ACTIVE_DASHBOARD', dashboard)
-      subprocess.check_call(['python3', '/home/pi/home-dashboard/dashboards/set_screen.py', dashboard])
+    if config['DASHBOARDS']['active'] != name:
+      subprocess.check_call(['python3', f"{config['PATHS']['src']}/dashboards/set_screen.py", name])
+      
+      # save name of current active screen
+      with open(CONFIG_PATH, 'w') as f:
+        config['DASHBOARDS']['active'] = name
+        config.write(f)
   except subprocess.CalledProcessError:
-    print('Dashboard \'{}\' failed to run!'.format(dashboard.upper()))
+    print(f"Could not set screen to dashboard '{name.upper()}'!")
 
 
-def handle_button(pin):
-  dashboard = DASHBOARDS[BUTTONS.index(pin)]
-  load_dashboard(dashboard)
-
-
+# listen to button presses
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(BUTTONS, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 for pin in BUTTONS:
-  GPIO.add_event_detect(pin, GPIO.FALLING, handle_button, bouncetime=250)
+  GPIO.add_event_detect(pin, GPIO.FALLING, load_dashboard, bouncetime=250)
 
-load_dashboard(DASHBOARDS[0])
+load_dashboard(BUTTONS[0])  # start on first screen
 
 signal.pause()

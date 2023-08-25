@@ -7,3 +7,4 @@ python-crontab==3.0.0
 qrcode==7.4.2
 requests==2.30.0
 selenium==4.9.1
+configparser==6.0.0

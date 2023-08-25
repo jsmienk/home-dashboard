@@ -1,19 +1,23 @@
-from crontab import CronTab
+import configparser
 
+config = configparser.ConfigParser()
+config.read('~/home-dashboard/config.ini')
+SRC        = config['PATHS']['src']
+DASHBOARDS = config['DASHBOARDS']['names']
 
-PWD = '/home/pi/home-dashboard'
-DASHBOARDS = ['art', 'film_screenings']
 
 def dashboards(name, command):
   if name not in DASHBOARDS:
     raise ValueError('Invalid dashboard name!')
-  return f"python3 {PWD}/dashboards/{name}/{command}.py >> {PWD}/dashboards/{name}/{command}.log 2>&1"
+  return f"python3 {SRC}/dashboards/{name}/{command}.py >> {SRC}/logs/{name}-{command}.log 2>&1"
 
 def renderers(name):
   if name not in DASHBOARDS:
     raise ValueError('Invalid dashboard name!')
-  return f"python3 {PWD}/renderers/render_{name}.py >> {PWD}/dashboards/{name}/render.log 2>&1"
+  return f"python3 {SRC}/renderers/render_{name}.py >> {SRC}/logs/{name}-render.log 2>&1"
 
+
+from crontab import CronTab
 
 with CronTab(user='pi') as cron:
   cron.remove_all()

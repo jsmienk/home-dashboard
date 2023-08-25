@@ -5,3 +5,4 @@ html/renders/*
 geckodriver.log
 home_dashboard.db
 .DS_Store
+logs/*

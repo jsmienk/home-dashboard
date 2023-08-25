@@ -1,16 +1,17 @@
 """
 Run a couple times a day using a cronjob to update the data in the database.
 """
-
-import os
+import configparser
 import requests
 import sqlite3
 
 from datetime import datetime, date, timedelta
 
 
-URL = "https://www.vuecinemas.nl/movies.json"
-CINEMA_ID = 24
+config = configparser.ConfigParser()
+config.read('~/home-dashboard/config.ini')
+URL       = config['FILM_SCREENINGS']['url']
+CINEMA_ID = config['FILM_SCREENINGS']['cinema_id']
 
 
 def parse_datetime(datetime_str):
@@ -67,7 +68,7 @@ for i in range(7):
   response = requests.get(URL, params=query_params)
   if response.status_code == 200:
     # Create a SQLite database connection
-    with sqlite3.connect(os.getenv('HOME_DASHBOARD_DB')) as conn:
+    with sqlite3.connect(config['PATHS']['db']) as conn:
       cursor = conn.cursor()
       for film_data in response.json():
         f = Film(film_data)
