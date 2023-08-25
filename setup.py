@@ -12,9 +12,10 @@ import os
 
 
 folders = [
-  "art",
-  "html/renders/tmp",
-  "screens"
+  'art',
+  'html/renders/tmp',
+  'screens',
+  'logs'
 ]
 
 for folder in folders:
